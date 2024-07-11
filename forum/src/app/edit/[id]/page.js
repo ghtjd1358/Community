@@ -1,9 +1,6 @@
 import { connectDB } from "@/app/database";
 import { ObjectId } from "mongodb";
 
-
-
-
 export default async function Edit(props) {
 
     const db = (await connectDB).db('forum(next)');

@@ -1,3 +1,5 @@
+'use client'
+
 import { connectDB } from "@/app/database"
 import { ObjectId } from "mongodb";
 
