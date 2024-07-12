@@ -1,4 +1,13 @@
-export default function Write(){
+import { getServerSession } from "next-auth"
+import { authOptions } from "../../../pages/api/auth/[...nextauth]"
+
+export default async function Write(){
+   const session = await getServerSession(authOptions)
+    if(!session){
+      return <div>로그인이 필요합니다.</div>
+    }
+
+
     return (
         <div className="p-20">
         <form action="/api/post/new" method="POST">
