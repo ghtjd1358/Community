@@ -9,7 +9,7 @@ export default function Content({ _id }) {
         fetch(`/api/comment/list?id=${_id}`)
             .then((response) => response.json())
             .then((data) => {
-                console.log('그녀석입니다만!!!!!!!', data);
+                console.log('서버서에서 받은 data', data);
                 setComments(data);
             });
     };
