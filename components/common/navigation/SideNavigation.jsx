@@ -1,24 +1,32 @@
-
 import { Button } from '@/components/ui/button'
 import styles from './SideNavigation.module.scss'
 import { Search } from 'lucide-react'
 import { Input } from "@/components/ui/input"
+import Link from 'next/link'
 
 
 function SideNavigation() {
   return (
-    <div className={styles.container}>{/* 검색창 */}
-        <div className={styles.container__searchBox}>
-        <Input type="text" placeholder="검색어를 입력해주세요." className="focus-visible:ring-0" />
-            <Button variant={"outline"} size="icon">
-                <Search className='w-4, h-4' />
+    <div className={styles.container}>
+        <Link href={'/'} className={styles.container__logo}>개발 일지</Link>
+
+        <form action="/search" method="GET" className={styles.container__searchBox}>
+            <Input type="text" name="query" placeholder="검색어를 입력해주세요." className="focus-visible:ring-0" />
+            <Button variant={"outline"} size="icon" type="submit">
+                <Search className='w-4 h-4' />
             </Button>
-        </div>
+        </form>
+
         <div className={styles.container__buttonBox}>
-            <Button variant={"outline"} className="w-full text-orange-500 border-orange-400 hover:bg-orange-50 hover:text-orange-500" >Add New Page</Button>
+           <Link href={'/write'} className='w-full'>
+           <Button variant={"outline"} className="w-full text-orange-500 border-orange-400 hover:bg-orange-100 hover:text-orange-600">
+                글작성
+            </Button>
+           </Link>
         </div>
+
         <div className={styles.container__todos}>
-            <span className={styles.container__todos__lable}>너의 게시판</span>
+            <span className={styles.container__todos__lable}></span>
         </div>
     </div>
   )

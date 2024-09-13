@@ -10,6 +10,14 @@
     border-left: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 
+    &__logo {
+        font-weight: bold;
+        font-size: 32px;
+        text-align: center;
+        letter-spacing: 10px;
+        margin: 10px;
+    }
+
     &__searchBox {
         display: flex;
         align-items: center;
