@@ -12,6 +12,6 @@ export default async function update(req, res){
         }
     }
     const db = (await connectDB).db('forum(next)');
-    const results = await db.collection('post').updateOne({_id : new ObjectId(_id)},{$set : {title : title, content : content}}); //inc 고려했으나 사용하지 않음
+    const results = await db.collection('post').updateOne({_id : new ObjectId(_id)},{$set : {title : title, content : content}}); //inc 고려했으나 사용하지 않았다.
     return res.status(200).json(results)
 }
