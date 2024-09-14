@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { fetchRead } from '@/redux/features/forumSlice'
+import { fetchDelete, fetchRead } from '@/redux/features/forumSlice'
 import Image from 'next/image'
 import myImage from '../../../public/images/2.jpg'
 import myImages from '../../../public/images/1.png'
@@ -26,7 +26,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
 import { Heart, MessageCircle, Send, BookmarkIcon, Edit } from 'lucide-react';
 import { useRouter } from 'next/navigation'
-
+import Swal from 'sweetalert2';
 
 function ForumList() {
     const dispatch = useDispatch()
@@ -36,6 +36,41 @@ function ForumList() {
     useEffect(() => {
         dispatch(fetchRead())
     }, [dispatch])
+
+   
+    const deleteHandler = (id) => {
+        Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: "이 작업은 되돌릴 수 없습니다!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(fetchDelete(id)).then(() => {
+                    Swal.fire({
+                        title: '삭제되었습니다!',
+                        text: '게시물이 성공적으로 삭제되었습니다.',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '확인'
+                    });
+                }).catch((error) => {
+                    Swal.fire({
+                        title: '삭제 실패!',
+                        text: '게시물 삭제에 실패했습니다. 나중에 다시 시도해 주세요.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: '확인'
+                    });
+                });
+            }
+        });
+    };
+    
 
     if (loading) {
         return <div>로딩 중...</div>
@@ -124,7 +159,7 @@ function ForumList() {
                             </div>
                             <div className={styles.cardfooter__bottom}>
                                 <span className={styles.cardfooter__bottom__data}>1일 전</span>
-                                <span className={styles.cardfooter__bottom__detail}>자세히 보기</span>
+                                <span onClick={() => deleteHandler(item._id)} className={styles.cardfooter__bottom__detail}>삭제</span>
                             </div>
                         </CardFooter>
                     </Card>

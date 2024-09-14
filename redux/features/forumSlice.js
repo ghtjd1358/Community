@@ -5,7 +5,6 @@ import axios from 'axios';
 export const fetchCreate = createAsyncThunk('features/fetchCreate', async (writeForm) => {
     const response = await axios.post('/api/post/create', writeForm);
     const data = response.data;
-    console.log('post 요청', data);
     return data; 
 });
 
@@ -23,6 +22,15 @@ export const fetchUpdate = createAsyncThunk('features/fetchUpdate', async (write
     console.log('patch 요청', data);
     console.log('patch 폼', writeForm)
     return data; 
+});
+
+// 비동기 삭제 요청
+export const fetchDelete = createAsyncThunk('features/fetchDelete', async (id) => {
+    const response = await axios.delete(`/api/delete/delete`, {data : {_id : id}});
+    const data = response.data;
+    console.log('삭제 요청', id);
+    console.log('이놈이 원인인가?', data)
+    return id; 
 });
 
 const initialState = {
@@ -73,9 +81,24 @@ const postSlice = createSlice({
                 if(findData !== -1){
                     state.lists[findData] = action.payload;
                 }
-                
             })
             .addCase(fetchUpdate.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+
+              // Delete 요청 처리
+            .addCase(fetchDelete.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchDelete.fulfilled, (state, action) => {
+                state.loading = false;
+                const findData = state.lists.filter(item => item._id !== action.payload)
+                console.log('찾는 데이터', findData)
+                console.log('찾는 아이디', action.payload)
+                state.lists = findData;
+            })
+            .addCase(fetchDelete.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             });
