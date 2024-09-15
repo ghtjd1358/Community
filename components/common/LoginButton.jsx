@@ -16,7 +16,7 @@ export default function LoginButton({ session }) {
                 onClick={() => { session ? signOut() : signIn() }} 
                 className="w-full mt-2 mb-5"
             >
-                {session ? '로그아웃' : '로그인'}
+                {session ? '로그아웃!' : '로그인'}
             </Button>
         </>
     )
