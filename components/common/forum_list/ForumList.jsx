@@ -105,7 +105,7 @@ function ForumList() {
                                 <CarouselContent className="h-[350px] w-full">
                                     <CarouselItem className="relative w-full h-full">
                                         <Image
-                                            src={myImage}
+                                            src={myImages}
                                             alt="사진"
                                             fill
                                             style={{ objectFit: 'cover' }} 
@@ -115,7 +115,7 @@ function ForumList() {
                                     </CarouselItem>
                                     <CarouselItem className="relative w-full h-full">
                                         <Image
-                                            src={myImages}
+                                            src={myImage}
                                             alt="사진"
                                             fill
                                             style={{ objectFit: 'cover' }} 
@@ -125,7 +125,7 @@ function ForumList() {
                                     </CarouselItem>
                                     <CarouselItem className="relative w-full h-full">
                                         <Image
-                                            src={myImage}
+                                            src={myImages}
                                             alt="사진"
                                             fill
                                             style={{ objectFit: 'cover' }} 
