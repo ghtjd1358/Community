@@ -1,9 +1,9 @@
-
 import styles from './page.module.scss'
 import WriteForm from './WriteForm'
 
+
 function Write() {
-  
+
   return (
     <>
       <div className={styles.container}>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import styles from "./page.module.scss"
 import MDEdiotr from "@uiw/react-md-editor"
-import { useCallback, useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { fetchCreate } from "@/redux/features/forumSlice"
 import { useRouter } from "next/navigation"
@@ -15,8 +15,6 @@ export default function WriteForm() {
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-
-
 
   const postHandler = async (e) => {
     e.preventDefault();

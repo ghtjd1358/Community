@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // 비동기 쓰기 요청
-export const fetchCreate = createAsyncThunk('features/fetchCreate', async (writeForm) => {
+export const fetchCreate = createAsyncThunk('features/fetchCreate', async (writeForm, {getState}) => {
     const response = await axios.post('/api/post/create', writeForm);
     const data = response.data;
     return data; 
 });
 
 // 비동기 읽기 요청
-export const fetchRead = createAsyncThunk('features/fetchRead', async (id) => {
+export const fetchRead = createAsyncThunk('features/fetchRead', async () => {
     const response = await axios.get('/api/get/read');
     const data = response.data;
     return data; 
@@ -19,8 +19,6 @@ export const fetchRead = createAsyncThunk('features/fetchRead', async (id) => {
 export const fetchUpdate = createAsyncThunk('features/fetchUpdate', async (writeForm) => {
     const response = await axios.patch('/api/patch/update', writeForm);
     const data = response.data;
-    console.log('patch 요청', data);
-    console.log('patch 폼', writeForm)
     return data; 
 });
 
@@ -28,8 +26,6 @@ export const fetchUpdate = createAsyncThunk('features/fetchUpdate', async (write
 export const fetchDelete = createAsyncThunk('features/fetchDelete', async (id) => {
     const response = await axios.delete(`/api/delete/delete`, {data : {_id : id}});
     const data = response.data;
-    console.log('삭제 요청', id);
-    console.log('이놈이 원인인가?', data)
     return id; 
 });
 

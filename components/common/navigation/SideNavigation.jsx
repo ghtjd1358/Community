@@ -1,5 +1,3 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import LoginButton from '../LoginButton'
 import { Button } from '@/components/ui/button'
 import { Search } from 'lucide-react'
@@ -7,15 +5,12 @@ import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import styles from './SideNavigation.module.scss'
 
-export default async function SideNavigation() {
-    const session = await getServerSession(authOptions)
-    console.log(session)
-
+export default function SideNavigation() {
     return (
         <div className={styles.container}>
             <Link href={'/'} className={styles.container__logo}>개발 일지</Link>
             <div className={styles.container__authBox}>
-                <LoginButton session={session}/>
+                <LoginButton/>
             </div>
 
             <form action="/search" method="GET" className={styles.container__searchBox}>

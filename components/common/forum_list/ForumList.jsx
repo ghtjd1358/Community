@@ -14,31 +14,59 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card"
 import styles from "./list.module.scss"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
-import { Heart, MessageCircle, Send, BookmarkIcon, Edit } from 'lucide-react';
+import { Heart, MessageCircle, Send, BookmarkIcon, Edit } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
+import { useSession } from 'next-auth/react'
 
-function ForumList() {
+export default function ForumList() {
+    const { data: session } = useSession()
     const dispatch = useDispatch()
     const router = useRouter()
-    const { lists, loading, error } = useSelector((state) => state.posts); 
+    const { lists, loading, error } = useSelector((state) => state.posts)
 
     useEffect(() => {
         dispatch(fetchRead())
     }, [dispatch])
 
-   
-    const deleteHandler = (id) => {
+    const deleteHandler = async (id) => {
+        const findPost = lists.find(item => item._id === id)
+        const postAuthorEmail = findPost ? findPost.author : null
+    
+        if (!session) {
+            Swal.fire({
+                title: '로그인 필요',
+                text: '로그인 후 삭제할 수 있습니다.',
+                icon: 'warning',
+                confirmButtonText: '로그인 페이지로 이동',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.push('/')
+                }
+            })
+            return
+        }
+    
+        if (postAuthorEmail !== session?.user?.email) {
+            Swal.fire({
+                title: '권한 부족',
+                text: '이 게시물을 삭제할 권한이 없습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인'
+            })
+            return
+        }
+    
         Swal.fire({
             title: '정말로 삭제하시겠습니까?',
             text: "이 작업은 되돌릴 수 없습니다!",
@@ -50,26 +78,28 @@ function ForumList() {
             cancelButtonText: '취소'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(fetchDelete(id)).then(() => {
-                    Swal.fire({
-                        title: '삭제되었습니다!',
-                        text: '게시물이 성공적으로 삭제되었습니다.',
-                        icon: 'success',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: '확인'
-                    });
-                }).catch((error) => {
-                    Swal.fire({
-                        title: '삭제 실패!',
-                        text: '게시물 삭제에 실패했습니다. 나중에 다시 시도해 주세요.',
-                        icon: 'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: '확인'
-                    });
-                });
+                dispatch(fetchDelete(id))
+                    .then(() => {
+                        Swal.fire({
+                            title: '삭제되었습니다!',
+                            text: '게시물이 성공적으로 삭제되었습니다.',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: '확인'
+                        })
+                    })
+                    .catch((error) => {
+                        Swal.fire({
+                            title: '삭제 실패!',
+                            text: `게시물 삭제에 실패했습니다. 나중에 다시 시도해 주세요. ${error.message}`,
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: '확인'
+                        })
+                    })
             }
-        });
-    };
+        })
+    }
     
 
     if (loading) {
@@ -79,6 +109,44 @@ function ForumList() {
     if (error) {
         return <div>에러 발생: {error.message}</div>
     }
+
+    const renderImages = () => (
+        <>
+            <CarouselItem className="relative w-full h-full">
+                <Image
+                    src={myImages}
+                    alt="사진"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover' }}
+                    className="absolute inset-0"
+                    priority
+                />
+            </CarouselItem>
+            <CarouselItem className="relative w-full h-full">
+                <Image
+                    src={myImage}
+                    alt="사진"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover' }}
+                    className="absolute inset-0"
+                    priority
+                />
+            </CarouselItem>
+            <CarouselItem className="relative w-full h-full">
+                <Image
+                    src={myImages}
+                    alt="사진"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectFit: 'cover' }}
+                    className="absolute inset-0"
+                    priority
+                />
+            </CarouselItem>
+        </>
+    )
 
     return (
         <>
@@ -94,7 +162,7 @@ function ForumList() {
                                         <AvatarImage src="https://github.com/shadcn.png" />
                                         <AvatarFallback></AvatarFallback>
                                     </Avatar>
-                                    <span className={styles.cardtitle__avatar__name}>hojjang18@naver.com</span>
+                                    <span className={styles.cardtitle__avatar__name}>{item.author}</span>
                                 </div>
                                 <Button variant="outline" className=" flex bg-gray-300 p-3-5 font-extrabold text-black hover:bg-slate-200">팔로우</Button>
                             </CardTitle>
@@ -103,36 +171,7 @@ function ForumList() {
                         <CardContent className="relative w-full h-[350px]">
                             <Carousel className="relative w-full h-full">
                                 <CarouselContent className="h-[350px] w-full">
-                                    <CarouselItem className="relative w-full h-full">
-                                        <Image
-                                            src={myImages}
-                                            alt="사진"
-                                            fill
-                                            style={{ objectFit: 'cover' }} 
-                                            className="absolute inset-0"
-                                            priority 
-                                        />
-                                    </CarouselItem>
-                                    <CarouselItem className="relative w-full h-full">
-                                        <Image
-                                            src={myImage}
-                                            alt="사진"
-                                            fill
-                                            style={{ objectFit: 'cover' }} 
-                                            className="absolute inset-0"
-                                            priority
-                                        />
-                                    </CarouselItem>
-                                    <CarouselItem className="relative w-full h-full">
-                                        <Image
-                                            src={myImages}
-                                            alt="사진"
-                                            fill
-                                            style={{ objectFit: 'cover' }} 
-                                            className="absolute inset-0"
-                                            priority
-                                        />
-                                    </CarouselItem>
+                                    {renderImages()}
                                 </CarouselContent>
                                 <CarouselNext className="absolute top-[50%] right-3 transform -translate-y-1/2" />
                                 <CarouselPrevious className="absolute top-[50%] left-3 transform -translate-y-1/2" />
@@ -143,9 +182,9 @@ function ForumList() {
                             <div className={styles.cardfooter__top}>
                                 <div className={styles.cardfooter__top__iconbox}>
                                     <div className={styles.cardfooter__top__iconbox__icons}>
-                                        <Heart className="w-6 h-6" /> 
+                                        <Heart className="w-6 h-6" />
                                         <MessageCircle className="w-6 h-6" />
-                                        <Send className="w-6 h-6" /> 
+                                        <Send className="w-6 h-6" />
                                     </div>
                                     <BookmarkIcon className="w-6 h-6" />
                                 </div>
@@ -168,5 +207,3 @@ function ForumList() {
         </>
     )
 }
-
-export default ForumList
