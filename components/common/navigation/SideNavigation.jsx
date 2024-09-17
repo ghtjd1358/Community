@@ -4,6 +4,8 @@ import { Search } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import styles from './SideNavigation.module.scss'
+import WriteButton from './WriteButton'
+
 
 export default function SideNavigation() {
     return (
@@ -21,11 +23,7 @@ export default function SideNavigation() {
             </form>
 
             <div className={styles.container__buttonBox}>
-                <Link href={'/write'} className='w-full'>
-                    <Button variant={"outline"} className="w-full text-orange-500 border-orange-400 hover:bg-orange-100 hover:text-orange-600">
-                        글작성
-                    </Button>
-                </Link>
+                <WriteButton/>
             </div>
 
             <div className={styles.container__todos}>

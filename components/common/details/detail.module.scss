@@ -1,12 +1,22 @@
-.cardtitle__avatar{
+  .triggerButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #807c7c;
+    font-weight: bold;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .cardtitle__avatar{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 2px;
     width: 22%;
-    gap: 8px;
-    
-
+    gap: 8px; 
 
     &__name {
         font-weight: bold;
@@ -36,13 +46,12 @@
         align-items: center;
         margin-bottom: 20px;
         cursor: pointer;
-
+        color: #000;
 
         &__icons{
             width: 24%;
             display: flex;
             justify-content: space-between;
-
         }
     }
 
@@ -56,10 +65,7 @@
 
         &__content{
           width: 100%;  
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          font-size: 14px;
+          font-size: 16px;
           color: #000;
         }
     }
@@ -94,5 +100,3 @@
     }
 
 }
-
-

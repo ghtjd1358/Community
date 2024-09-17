@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Button } from "@/components/ui/button";
@@ -15,11 +14,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { userDefaultValues, userSchemas } from "@/util/schema/user";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import styles from "./page.module.scss"
+import { useDispatch } from "react-redux";
+import { fetchRegister } from "@/redux/features/register";
+
 
 export default function Register() {
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const form = useForm({
     mode: "onChange",
@@ -27,10 +29,15 @@ export default function Register() {
     defaultValues: userDefaultValues.signUpDefaultValues,
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    console.log("Form submitted:", data);
-    router.push("/");
+  const handleSubmit = form.handleSubmit(async (registerForm) => {
+    try {
+      await dispatch(fetchRegister(registerForm)).unwrap();
+      router.push("/");
+    } catch (error) {
+      console.error("Registration error: ", error);
+    }
   });
+  
 
   return (
     <Card className="w-[550px] p-10 h-[650px]">
@@ -47,13 +54,13 @@ export default function Register() {
           <form className="space-y-8" onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <RHFInput name="name" label="Name" placeholder="John Doe" />
+                <RHFInput name="name" label="Name" placeholder="이름을 입력해주세요." />
               </div>
               <div className="grid gap-2">
                 <RHFInput
                   name="email"
                   label="Email"
-                  placeholder="m@example.com"
+                  placeholder="이메일을 입력해주세요."
                 />
               </div>
               <div className="grid gap-2">
@@ -61,17 +68,17 @@ export default function Register() {
                   name="password"
                   label="Password"
                   type="password"
-                  placeholder=""
+                  placeholder="비밀번호를 입력해쥇요."
                 />
               </div>
               <Button type="submit" className="w-full">
-                Create an account
+                계정생성
               </Button>
             </div>
             <div className="mt-4 text-sm text-center">
-              Already have an account?{" "}
+              이미 계정이 있으신가요?{" "}
               <Link href="/auth/login" className="underline">
-                Sign in
+                로그인
               </Link>
             </div>
           </form>

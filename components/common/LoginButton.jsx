@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 
 export default function LoginButton() {
   const { data: session } = useSession(); 
+  console.log('유저 정보', session)
 
   return (
     <>

@@ -1,8 +1,5 @@
-"use client"
+'use client'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { fetchDelete, fetchRead } from '@/redux/features/forumSlice'
 import Image from 'next/image'
 import myImage from '../../../public/images/2.jpg'
 import myImages from '../../../public/images/1.png'
@@ -16,7 +13,6 @@ import {
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -25,82 +21,19 @@ import styles from "./list.module.scss"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
 import { Heart, MessageCircle, Send, BookmarkIcon, Edit } from 'lucide-react'
+import DetailPage from '../details/DetailPage'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
-import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
-export default function ForumList() {
-    const { data: session } = useSession()
-    const dispatch = useDispatch()
+export default function ForumList({lists, error, loading, deleteHandler}) {
     const router = useRouter()
-    const { lists, loading, error } = useSelector((state) => state.posts)
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedItem, setSelectedItem] = useState(null)
 
-    useEffect(() => {
-        dispatch(fetchRead())
-    }, [dispatch])
-
-    const deleteHandler = async (id) => {
-        const findPost = lists.find(item => item._id === id)
-        const postAuthorEmail = findPost ? findPost.author : null
-    
-        if (!session) {
-            Swal.fire({
-                title: '로그인 필요',
-                text: '로그인 후 삭제할 수 있습니다.',
-                icon: 'warning',
-                confirmButtonText: '로그인 페이지로 이동',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    router.push('/')
-                }
-            })
-            return
-        }
-    
-        if (postAuthorEmail !== session?.user?.email) {
-            Swal.fire({
-                title: '권한 부족',
-                text: '이 게시물을 삭제할 권한이 없습니다.',
-                icon: 'warning',
-                confirmButtonText: '확인'
-            })
-            return
-        }
-    
-        Swal.fire({
-            title: '정말로 삭제하시겠습니까?',
-            text: "이 작업은 되돌릴 수 없습니다!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '삭제',
-            cancelButtonText: '취소'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(fetchDelete(id))
-                    .then(() => {
-                        Swal.fire({
-                            title: '삭제되었습니다!',
-                            text: '게시물이 성공적으로 삭제되었습니다.',
-                            icon: 'success',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '확인'
-                        })
-                    })
-                    .catch((error) => {
-                        Swal.fire({
-                            title: '삭제 실패!',
-                            text: `게시물 삭제에 실패했습니다. 나중에 다시 시도해 주세요. ${error.message}`,
-                            icon: 'error',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: '확인'
-                        })
-                    })
-            }
-        })
+    const modalHandler = (item = null) => {
+        setSelectedItem(item) 
+        setIsOpen(prev => !prev) 
     }
-    
 
     if (loading) {
         return <div>로딩 중...</div>
@@ -183,7 +116,7 @@ export default function ForumList() {
                                 <div className={styles.cardfooter__top__iconbox}>
                                     <div className={styles.cardfooter__top__iconbox__icons}>
                                         <Heart className="w-6 h-6" />
-                                        <MessageCircle className="w-6 h-6" />
+                                        <MessageCircle className="w-6 h-6"/>
                                         <Send className="w-6 h-6" />
                                     </div>
                                     <BookmarkIcon className="w-6 h-6" />
@@ -194,7 +127,9 @@ export default function ForumList() {
                                     <Edit onClick={() => router.push(`/edit/${item._id}`)} className="cursor-pointer w-6 h-6" />
                                     <span className={styles.cardfooter__top__chat__content}>{item.content}</span>
                                 </div>
-                                <CardDescription className="cursor-pointer">...더보기</CardDescription>
+                                <span 
+                                    onClick={() => modalHandler(item)} 
+                                    className=' text-gray-400 text-sm cursor-pointer'>...더보기</span>
                             </div>
                             <div className={styles.cardfooter__bottom}>
                                 <span className={styles.cardfooter__bottom__data}>1일 전</span>
@@ -204,6 +139,12 @@ export default function ForumList() {
                     </Card>
                 ))
             )}
+
+            {isOpen && 
+            <DetailPage modal={modalHandler} 
+            item={selectedItem} 
+            
+            />} 
         </>
     )
 }

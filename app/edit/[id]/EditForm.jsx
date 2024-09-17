@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchRead, fetchUpdate } from "@/redux/features/forumSlice"
 import { useRouter } from "next/navigation"
+import MDEditor from "@uiw/react-md-editor"
 
 export default function EditForm({id}) {
   const dispatch = useDispatch()
@@ -60,13 +61,10 @@ export default function EditForm({id}) {
           placeholder="제목을 입력하세요"
           className="mb-4"
         />
-        <textarea
-          name="content"
+         <MDEditor
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="내용을 입력하세요"
-          className="mb-4 h-[700px] p-2 text-left border border-rgb(229, 229, 229) rounded-md"
-          style={{ textAlign: "left", verticalAlign: "top" }}
+          onChange={setContent}
+          height={680}
         />
         <Button type="submit" variant="outline" className="w-full h-[70px]">
           글 작성

@@ -4,28 +4,26 @@ import axios from 'axios';
 // 비동기 쓰기 요청
 export const fetchCreate = createAsyncThunk('features/fetchCreate', async (writeForm, {getState}) => {
     const response = await axios.post('/api/post/create', writeForm);
-    const data = response.data;
-    return data; 
+    return response.data;
 });
 
 // 비동기 읽기 요청
 export const fetchRead = createAsyncThunk('features/fetchRead', async () => {
     const response = await axios.get('/api/get/read');
-    const data = response.data;
-    return data; 
+    return response.data;
 });
 
 // 비동기 수정 요청
 export const fetchUpdate = createAsyncThunk('features/fetchUpdate', async (writeForm) => {
     const response = await axios.patch('/api/patch/update', writeForm);
-    const data = response.data;
-    return data; 
+    return response.data; 
 });
 
 // 비동기 삭제 요청
 export const fetchDelete = createAsyncThunk('features/fetchDelete', async (id) => {
     const response = await axios.delete(`/api/delete/delete`, {data : {_id : id}});
     const data = response.data;
+    console.log(data)
     return id; 
 });
 

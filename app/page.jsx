@@ -1,5 +1,6 @@
+import ForumContainerList from "@/components/common/forum_list/ForumContainerList";
 import styles from "./page.module.scss";
-import ForumList from '@/components/common/forum_list/ForumList';
+
 
 export default function Home() {
   
@@ -8,7 +9,7 @@ export default function Home() {
     <div className={styles.container}>
       <div className={styles.container__onBoarding}>
         <div className={styles.container__onBoarding__steps}>
-          <ForumList/>
+          <ForumContainerList/>
         </div>
       </div>
     </div>
