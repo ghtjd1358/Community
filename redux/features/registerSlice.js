@@ -25,19 +25,19 @@ const registerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(register.pending, (state) => {
+      .addCase(fetchRegister.pending, (state) => {
         state.loading = true;
         state.error = null; 
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(fetchRegister.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload; 
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(fetchRegister.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; 
       });
   }
 });
 
-export default registerSlice;
+export default registerSlice.reducer;
