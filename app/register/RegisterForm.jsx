@@ -16,7 +16,7 @@ import { userDefaultValues, userSchemas } from "@/util/schema/user";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.scss"
 import { useDispatch } from "react-redux";
-import { fetchRegister } from "@/redux/features/register";
+import { fetchRegister } from "@/redux/features/registerSlice";
 
 
 export default function Register() {
