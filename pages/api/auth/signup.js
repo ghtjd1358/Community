@@ -8,14 +8,12 @@ export default async function signup(req, res) {
     // 입력 값이 모두 비어 있지 않은지 확인
     if (name !== '' && email !== '' && password !== '') {
       try {
-        // 데이터베이스 연결
         const db = (await connectDB).db('forum(next)');
         
         // 이메일 중복 확인
         const existingUser = await db.collection('user_cred').findOne({ email });
 
         if (existingUser) {
-          // 이메일 중복 시 오류 메시지 반환
           return res.status(400).json({ message: 'Email is already in use.' });
         }
 

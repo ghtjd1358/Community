@@ -141,8 +141,9 @@ export default function ForumList({lists, error, loading, deleteHandler}) {
             )}
 
             {isOpen && 
-            <DetailPage modal={modalHandler} 
+            <DetailPage 
             item={selectedItem} 
+            setIsOpen = {setIsOpen}
             
             />} 
         </>

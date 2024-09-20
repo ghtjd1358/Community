@@ -5,8 +5,6 @@ import { authOptions } from "../auth/[...nextauth]";
 export default async function handler(req, res){
     const {title, content} = req.body 
     const session = await getServerSession(req, res, authOptions)
-    // console.log(session.user.email)
-    // console.log('글전송 : ', req.body)
     
     if(session){
         req.body.author = session.user.email
