@@ -1,10 +1,8 @@
 import LoginButton from '../LoginButton'
-import { Button } from '@/components/ui/button'
-import { Search } from 'lucide-react'
-import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import styles from './SideNavigation.module.scss'
 import WriteButton from './WriteButton'
+import SearchButton from './SearchButton'
 
 
 export default function SideNavigation() {
@@ -15,12 +13,7 @@ export default function SideNavigation() {
                 <LoginButton/>
             </div>
 
-            <form action="/search" method="GET" className={styles.container__searchBox}>
-                <Input type="text" name="query" placeholder="검색어를 입력해주세요." className="focus-visible:ring-0" />
-                <Button variant={"outline"} size="icon" type="submit">
-                    <Search className='w-4 h-4' />
-                </Button>
-            </form>
+            <SearchButton/>            
 
             <div className={styles.container__buttonBox}>
                 <WriteButton/>
