@@ -5,23 +5,35 @@ import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import { useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchDelete, fetchRead } from '@/redux/features/forumSlice'
-
+import { useFetchSearchQuery } from "@/redux/features/searchSlice"
+import SearchButton from "../navigation/SearchButton"
 
 export default function ForumContainerList() {
     const { data: session } = useSession()
     const dispatch = useDispatch()
     const router = useRouter()
     const { lists, loading, error } = useSelector((state) => state.posts)
+    
+    // 검색 상태
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchType, setSearchType] = useState('title');
+
+    const { data: results } = useFetchSearchQuery(
+        { query: searchQuery, type: searchType },
+        { skip: !searchQuery }
+    );
 
     useEffect(() => {
-        dispatch(fetchRead())
-    }, [dispatch])
+        if (!searchQuery) {
+            dispatch(fetchRead());
+        }
+    }, [searchQuery, dispatch]);
 
     const deleteHandler = async (id) => {
-        const findPost = lists.find(item => item._id === id)
-        const postAuthorEmail = findPost ? findPost.author : null
+        const findPost = lists.find(item => item._id === id);
+        const postAuthorEmail = findPost ? findPost.author : null;
     
         if (!session) {
             Swal.fire({
@@ -31,10 +43,10 @@ export default function ForumContainerList() {
                 confirmButtonText: '로그인 페이지로 이동',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    router.push('/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F')
+                    router.push('/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F');
                 }
-            })
-            return
+            });
+            return;
         }
     
         if (postAuthorEmail !== session?.user?.email) {
@@ -43,8 +55,8 @@ export default function ForumContainerList() {
                 text: '이 게시물을 삭제할 권한이 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인'
-            })
-            return
+            });
+            return;
         }
     
         Swal.fire({
@@ -66,7 +78,7 @@ export default function ForumContainerList() {
                             icon: 'success',
                             confirmButtonColor: '#3085d6',
                             confirmButtonText: '확인'
-                        })
+                        });
                     })
                     .catch((error) => {
                         Swal.fire({
@@ -75,21 +87,25 @@ export default function ForumContainerList() {
                             icon: 'error',
                             confirmButtonColor: '#3085d6',
                             confirmButtonText: '확인'
-                        })
-                    })
+                        });
+                    });
             }
-        })
+        });
     }
 
-  return (
-    <>
-        <ForumList
-            lists = {lists}
-            error = {error}
-            loading = {loading}
-            deleteHandler = {deleteHandler}
-        />    
-    </>
-  )
-}
+    return (
+        <>
+            <SearchButton 
+                setSearchQuery={setSearchQuery} 
+                setSearchType={setSearchType} 
+            />
 
+            <ForumList
+                lists={searchQuery ? (results?.length ? results : []) : lists} // 검색어가 없을 때 lists 보여주기
+                error={error}
+                loading={loading}
+                deleteHandler={deleteHandler}
+            />    
+        </>
+    );
+}

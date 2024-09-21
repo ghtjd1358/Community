@@ -2,7 +2,6 @@ import LoginButton from '../LoginButton'
 import Link from 'next/link'
 import styles from './SideNavigation.module.scss'
 import WriteButton from './WriteButton'
-import SearchButton from './SearchButton'
 
 
 export default function SideNavigation() {
@@ -11,14 +10,10 @@ export default function SideNavigation() {
             <Link href={'/'} className={styles.container__logo}>개발 일지</Link>
             <div className={styles.container__authBox}>
                 <LoginButton/>
-            </div>
-
-            <SearchButton/>            
-
+            </div>     
             <div className={styles.container__buttonBox}>
                 <WriteButton/>
             </div>
-
             <div className={styles.container__todos}>
                 <span className={styles.container__todos__lable}></span>
             </div>
