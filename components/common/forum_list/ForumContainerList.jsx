@@ -25,6 +25,7 @@ export default function ForumContainerList() {
         { skip: !searchQuery }
     );
 
+    // 검색
     useEffect(() => {
         if (!searchQuery) {
             dispatch(fetchRead());
