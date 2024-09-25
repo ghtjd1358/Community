@@ -20,16 +20,17 @@
 
     &__searchBox {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
 
-        gap: 4px;
+        gap: 12px;
 
         &__Input {
             display:  flex;
             align-items: center;
             margin: 5px auto 5px;
+            width: 80%;
         }
     }
 
@@ -38,7 +39,6 @@
         align-items: center;
         justify-content: center;
 
-        width: 100%;
         margin: 12px 0;
     }
 

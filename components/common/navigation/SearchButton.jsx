@@ -16,7 +16,7 @@ export default function SearchButton({ setSearchQuery, setSearchType }) {
 
     const debounceSearch = debounce((query) => {
         setSearchQuery(query);
-    }, 1000);
+    }, 700);
 
     useEffect(() => {
         debounceSearch(localSearchQuery);
@@ -27,20 +27,8 @@ export default function SearchButton({ setSearchQuery, setSearchType }) {
 
     return (
         <form className={styles.container__searchBox} onSubmit={(e) => e.preventDefault()}>
-            <div className={styles.container__searchBox__Input}>
-                <Input
-                    value={localSearchQuery}
-                    onChange={(e) => setLocalSearchQuery(e.target.value)}
-                    type="text"
-                    name="query"
-                    placeholder="검색어를 입력해주세요."
-                    className="focus-visible:ring-0 w-[100%]"
-                />
-                <Search className='w-[20%]' />
-            </div>
-
             <Select onValueChange={(value) => setSearchType(value)} defaultValue="title">
-                <SelectTrigger className="w-[100%]">
+                <SelectTrigger className="w-[20%]">
                     <SelectValue placeholder="Search Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -48,6 +36,18 @@ export default function SearchButton({ setSearchQuery, setSearchType }) {
                     <SelectItem value="content">Content</SelectItem>
                 </SelectContent>
             </Select>
+
+            <div className={styles.container__searchBox__Input}>
+                <Input
+                    value={localSearchQuery}
+                    onChange={(e) => setLocalSearchQuery(e.target.value)}
+                    type="text"
+                    name="query"
+                    placeholder="검색어를 입력해주세요."
+                    className="focus-visible:ring-0 w-full"
+                />
+                <Search className='w-[20%]' />
+            </div>
         </form>
     )
 }

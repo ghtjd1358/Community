@@ -10,11 +10,11 @@ export async function middleware(request) {
   // NextResponse.rewrite()  
 
   const session = await getToken({req : request})
-  console.log('미들웨어 세션', session)
+  // console.log('미들웨어 세션', session)
 
   if(request.nextUrl.pathname === '/'){
-    console.log(new Date())
-    console.log(request.headers.get('sec-ch-ua-platform'))
+    // console.log(new Date())
+    // console.log(request.headers.get('sec-ch-ua-platform'))
   }
 
   if(request.nextUrl.pathname.startsWith('/write')){
