@@ -26,7 +26,7 @@ export default async function signup(req, res) {
         // 새로운 사용자 데이터 삽입
         await db.collection('user_cred').insertOne(userData);
 
-        // 성공 메시지 반환
+        // 성공 메시지 반환d
         return res.status(200).json({ message: 'User registered successfully' });
 
       } catch (error) {
