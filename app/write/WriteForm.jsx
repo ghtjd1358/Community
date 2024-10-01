@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux"
 import { fetchCreate } from "@/redux/features/forumSlice"
 import { useRouter } from "next/navigation"
 
-
 export default function WriteForm() {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -23,7 +22,7 @@ export default function WriteForm() {
       content: content
     }
 
-    await dispatch(fetchCreate(dataForm))
+    dispatch(fetchCreate(dataForm))
 
     setTitle('')
     setContent('')
@@ -41,14 +40,14 @@ export default function WriteForm() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="제목을 입력하세요"
-          className="mb-1 h-12"
+          className="mb-5 h-12"
         />
         <MDEdiotr
           value={content}
           onChange={setContent}
           height={680}
         />
-        <Button type="submit" variant="outline" className="w-full h-[70px]">
+        <Button type="submit" variant="outline" className="w-full h-[70px] mt-5">
           글 작성
         </Button>
       </form>

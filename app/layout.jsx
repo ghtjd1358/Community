@@ -13,11 +13,11 @@ const roboto = Roboto({ subsets : ["latin"], weight : ["400", "500", "700"]})
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={roboto.className}>
         <SessionProvider>
         <Provider store={store}>
-          <SideNavigation/>
+        <SideNavigation/>
           {children}
         </Provider>
         </SessionProvider>

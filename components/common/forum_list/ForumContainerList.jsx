@@ -9,7 +9,6 @@ import { fetchDelete, fetchRead } from "@/redux/features/forumSlice";
 import { useFetchSearchQuery } from "@/redux/features/searchSlice";
 import SearchButton from "../navigation/SearchButton";
 import ForumList from "./ForumList";
-import MyTistoryPosts from "../TstoryList"; 
 
 export default function ForumContainerList() {
   const { data: session } = useSession();
@@ -107,12 +106,6 @@ export default function ForumContainerList() {
         loading={loading}
         deleteHandler={deleteHandler}
       />
-
-      <hr /> {/* 구분선 추가 */}
-
-      {/* Tistory Posts Section */}
-      <h2>My Tistory Posts</h2>
-      <MyTistoryPosts />
     </>
   );
 }

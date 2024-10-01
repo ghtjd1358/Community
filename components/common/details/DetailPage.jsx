@@ -40,8 +40,8 @@ export default function DetailPage({ item, setIsOpen }) {
       <span onClick={toggleModal} className="absolute top-5 right-5 cursor-pointer">
         <X size={50} color="#ffffff" />
       </span>
-      <div className="relative w-[90%] max-w-[1200px] p-5 bg-white shadow-md rounded-lg flex">
-        <Card className="w-[70%] h-auto border-none shadow-none">
+      <div className="relative w-[90%] max-w-[1200px] p-5 bg-white shadow-md rounded-lg flex mb-20">
+        <Card className="w-[70%] h-[700px] border-none shadow-none">
           <CardHeader className="border-none">
             <CardTitle className="h-[60px] flex items-center justify-between p-2 border-none">
               <div className={styles.cardtitle__avatar}>

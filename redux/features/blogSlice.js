@@ -2,23 +2,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchRssPosts = createAsyncThunk('blog/fetchRssPosts', async () => {
-  const response = await axios.get('/api/rss');
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(response.data, 'text/xml');
-  const items = xml.getElementsByTagName('item');
+const url = 'https://hojjangfe1358.tistory.com/rss'
 
-  return Array.from(items).map(item => ({
-    title: item.getElementsByTagName('title')[0]?.textContent || 'No title',
-    link: item.getElementsByTagName('link')[0]?.textContent || '#',
-    pubDate: item.getElementsByTagName('pubDate')[0]?.textContent || 'No date',
-  }));
+export const fetchRssPosts = createAsyncThunk('blog/fetchRssPosts', async () => {
+  const response = await axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${url}`)
+  return response.data
 });
 
 const blogSlice = createSlice({
   name: 'blog',
   initialState: {
-    posts: [],
+    blogs: [],
     status: 'idle',
     error: null,
   },
