@@ -48,7 +48,7 @@ export default function WriteForm() {
           height={680}
         />
         <Button type="submit" variant="outline" className="w-full h-[70px] mt-5">
-          글 작성
+          글 작성 페이지
         </Button>
       </form>
     </>
