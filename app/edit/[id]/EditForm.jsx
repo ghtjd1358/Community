@@ -32,7 +32,7 @@ export default function EditForm({id}) {
     }
   },[lists, id])
 
-  //  페이지 수정항목
+  //  페이지 수정항목1
   const postHandler = async (e) => {
     e.preventDefault();
     const dataForm = {
