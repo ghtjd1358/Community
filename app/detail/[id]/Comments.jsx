@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Comments({item}) {
   const dispatch = useDispatch();
-  const { comments, loading, error } = useSelector(state => state.comment);
+  const { comments } = useSelector(state => state.comment);
   const [newComment, setNewComment] = useState(""); 
 
   useEffect(() => {

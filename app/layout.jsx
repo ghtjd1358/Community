@@ -1,12 +1,11 @@
 "use client"
 
 import { Roboto } from "next/font/google"
-// 전역 css
-import "./styles/globals.css";
 import SideNavigation from "@/components/common/navigation/SideNavigation";
 import { Provider } from "react-redux";
 import store from "@/redux/store";
 import { SessionProvider } from "next-auth/react";
+import "./styles/globals.css";
 
 
 const roboto = Roboto({ subsets : ["latin"], weight : ["400", "500", "700"]})

@@ -65,6 +65,7 @@ export const authOptions = {
 
   secret: 'qwerty1234!@',
   adapter: MongoDBAdapter(connectDB),
+
 };
 
 export default NextAuth(authOptions);

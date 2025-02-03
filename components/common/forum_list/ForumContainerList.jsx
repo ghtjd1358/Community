@@ -18,7 +18,7 @@ export default function ForumContainerList() {
 
   // 검색 상태
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("title");
+  const [searchType, setSearchType] = useState("content");
 
   const { data: results } = useFetchSearchQuery(
     { query: searchQuery, type: searchType },
@@ -45,7 +45,7 @@ export default function ForumContainerList() {
       }).then((result) => {
         if (result.isConfirmed) {
           router.push(
-            "/api/auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2F"
+            "http://localhost:3000/login"
           );
         }
       });
@@ -101,7 +101,7 @@ export default function ForumContainerList() {
       <SearchButton setSearchQuery={setSearchQuery} setSearchType={setSearchType} />
 
       <ForumList
-        lists={searchQuery ? (results?.length ? results : []) : lists} // 검색어가 없을 때 lists 보여주기
+        lists={searchQuery ? (results?.length ? results : []) : lists}
         error={error}
         loading={loading}
         deleteHandler={deleteHandler}

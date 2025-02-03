@@ -27,13 +27,13 @@ export default function SearchButton({ setSearchQuery, setSearchType }) {
 
     return (
         <form className={styles.container__searchBox} onSubmit={(e) => e.preventDefault()}>
-            <Select onValueChange={(value) => setSearchType(value)} defaultValue="title">
+            <Select onValueChange={(value) => setSearchType(value)} defaultValue="content">
                 <SelectTrigger className="w-[20%]">
                     <SelectValue placeholder="Search Type" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="title">Title</SelectItem>
                     <SelectItem value="content">Content</SelectItem>
+                    <SelectItem value="title">Title</SelectItem>
                 </SelectContent>
             </Select>
 

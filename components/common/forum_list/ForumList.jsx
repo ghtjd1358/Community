@@ -84,7 +84,7 @@ export default function ForumList({lists, error, loading, deleteHandler}) {
     return (
         <>
             {lists.length === 0 ? (
-                <div>데이터가 없습니다...</div>
+                <div>게시물이 없습니다...</div>
             ) : (
                 lists.map((item) => (
                     <Card key={item._id} className="w-[510px] h-[700px]">

@@ -7,17 +7,106 @@
     padding: 30px 0;
     background-color: #f9f9f9;
     border-right: 1px solid #d6d6d6;
-    
-
+  
     &__onBoarding {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      width: 90%;
+      height: 100%;
+      gap: 20px;
+  
+      .profileHeader {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: start;
-        width: 90%;
-        height: 100%;
-        gap: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+      }
+  
+      .profileImage {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 20px;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+  
+      .profileInfo {
+        width: 100%;
+        justify-content: space-between;
+        display: flex;
+        padding: 10px 20px;
 
-        
+        h2 {
+          font-weight: bold;
+          font-size: 18px;
+          margin-bottom: 10px;
+        }
+  
+        p {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 5px;
+        }
+
+        &__account{
+            display: flex;
+            border: 1px solid rebeccapurple;
+            flex-direction: column;
+            justify-items: center;
+        }
+
+        &__follow{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+      }
+
+      .container__editButton {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+  
+      .editProfile {
+        width: 48%;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+  
+        &:hover {
+          background-color: #2980b9;
+        }
+      }
+  
+      .container__posts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 100%;
+  
+        .post {
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+          }
+        }
+      }
     }
-}
+  }
+  

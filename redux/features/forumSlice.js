@@ -88,8 +88,8 @@ const postSlice = createSlice({
             .addCase(fetchDelete.fulfilled, (state, action) => {
                 state.loading = false;
                 const findData = state.lists.filter(item => item._id !== action.payload)
-                console.log('찾는 데이터', findData)
-                console.log('찾는 아이디', action.payload)
+                // console.log('찾는 데이터', findData)
+                // console.log('찾는 아이디', action.payload)
                 state.lists = findData;
             })
             .addCase(fetchDelete.rejected, (state, action) => {
